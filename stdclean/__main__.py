@@ -1,4 +1,5 @@
 """Allow stdclean to be executable through `python -m stdclean`."""
+
 from stdclean.cli import main
 
 

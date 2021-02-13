@@ -1,4 +1,5 @@
 """Main stdclean command line interface (CLI)."""
+
 import os
 import sys
 import argparse
