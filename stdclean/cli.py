@@ -1,9 +1,9 @@
+"""Main stdclean command line interface (CLI)."""
 import os
 import sys
 import argparse
 
-#from stdclean import __version__
-__version__ = 0
+from stdclean import __version__
 
 
 def version_msg():
