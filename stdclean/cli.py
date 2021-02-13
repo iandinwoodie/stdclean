@@ -6,8 +6,7 @@ import sys
 import click
 
 from stdclean import __version__
-
-
+from stdclean.main import stdclean
 
 
 def get_version_msg():
@@ -21,8 +20,13 @@ def get_version_msg():
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.version_option(__version__, '-V', '--version', message=get_version_msg())
 @click.argument('target', required=True)
-def main():
-    print(target)
+def main(target):
+    try:
+        stdclean(target)
+    except Exception as e:
+        click.echo(e)
+        sys.exit(1)
+
 
 
 if __name__ == '__main__':
