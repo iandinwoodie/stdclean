@@ -1,9 +1,8 @@
 """Main entry point for the stdclean command."""
 
-import os
+from stdclean.find import find_cpp_file_paths
 
 
 def stdclean(target):
-    if not os.path.exists(target):
-        raise RuntimeError('Target path "{}" does not exist.'.format(target))
-
+    path_list = find_cpp_file_paths(target)
+    [print(p) for p in path_list]
