@@ -3,7 +3,7 @@ default: tests
 
 .PHONY: tests
 tests:
-	pytest
+	python -m pytest
 
 
 .PHONY: clean
