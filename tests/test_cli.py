@@ -31,4 +31,3 @@ def test_cli_version(cli_runner, version_cli_flag):
     print('HERE: {}'.format(result.output))
     assert re.match('stdclean \\d\\.\\d\\.\\d from .+ \\(Python \\d\\.\\d\\)',
                     result.output)
-    #assert re.match(r'^Geometry type ".+" is not supported$', msg)
