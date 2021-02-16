@@ -37,6 +37,7 @@ def add_using_declarations(path, mapping=STD_LIB_MAPPING):
     block_comment_open_delim = '/*'
     block_comment_close_delim = '*/'
     inside_block_comment = False
+    found_objects = set()
     for line in lines:
         if block_comment_close_delim in line:
             inside_block_comment = False
@@ -52,45 +53,6 @@ def add_using_declarations(path, mapping=STD_LIB_MAPPING):
             continue
         elif not len(line) > 1:
             continue
-        print()
-        print(line.strip())
-        found_objects = find_std_objects(std_objects, line)
-        print(matches)
-
-        #regex = re.compile(
-        #    r'\\"|"(?:\\"|[^"])*"|[\s<\(](keywords)[\s>\)\*\&\(]'.format(
-        #        '|'.join(unfound_keywords)))
-
-        #for keyword in unfound_keywords:
-        #    regex = re.compile(
-        #        r'\b{kw}(?=([^"\\]*(\\.|"([^"\\]*\\.)*[^"\\]*"))*[^"]*$)'
-        # NEW REGEX = '\\"|"(?:\\"|[^"])*"|[\s<\(](string)[\s>\)\*\&\(]'
-        #            .format(kw=keyword))
-        #    result = regex.search(line)
-        #    if result:
-        #        print('MATCH: {}'.format(keyword))
-        #        found_keywords.add(keyword)
-        #unfound_keywords = unfound_keywords - found_keywords
-
-
-        #    regex = re.compile(
-        #        r'\b{kw}(?=([^"\\]*(\\.|"([^"\\]*\\.)*[^"\\]*"))*[^"]*$)'
-        #            .format(kw=keyword))
-        #    if result:
-        #        print('MATCH: {}'.format(keyword))
-        #        found_keywords.add(keyword)
-        #unfound_keywords = unfound_keywords - found_keywords
-
-
-    print('MODIFICATIONS: {}'.format(modification_count))
-    if modification_count:
-        print('OUTPUT:')
-        output_path = path.with_suffix(path.suffix + '.out')
-        with open(output_path, 'w') as fp:
-            fp.writelines(lines)
-        with open(output_path, 'r') as fp:
-            for line in fp:
-                print(line.strip())
-        output_path.unlink()
-        if output_path.exists():
-            print('ERROR')
+        found_objects.update(find_std_objects(std_objects, line))
+    if found_objects:
+        print('found std objects: {}'.format(found_objects))
