@@ -29,10 +29,10 @@ from stdclean import patch
     ('auto string = "";', ['string'], ['string']),
     # Object that partially match std types will not match.
     ('auto _string = "";', ['string'], []),
-    # ('auto string_ = "";', ['string'], []), # WARNING: PROBLEMATIC
+    ('auto string_ = "";', ['string'], []),
     ('auto _string_ = "";', ['string'], []),
     ('auto qstring = "";', ['string'], []),
-    # ('auto string1 = "";', ['string'], []), # WARNING: PROBLEMATIC
+    ('auto string1 = "";', ['string'], []),
     # Consider C++ modifiers (e.g., pointer).
     ('string* s;', ['string'], ['string']),
     ('string& s;', ['string'], ['string']),
