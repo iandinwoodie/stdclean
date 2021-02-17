@@ -4,6 +4,13 @@ from stdclean.find import find_cpp_file_paths
 from stdclean.patch import patch_with_std_decl
 
 STD_LIB_DEFAULT_MAPPING = {
+    'any': [
+        'any',
+        'bad_any_cast',
+        'swap',  # specialization
+        'make_any',
+        'any_cast',
+    ],
     'array': [
         # incomplete
         'array',
@@ -365,6 +372,36 @@ STD_LIB_DEFAULT_MAPPING = {
     'unordered_set': [
         # incomplete
         'unordered_set',
+    ],
+    'utility': [
+        'rel_ops',
+        'swap',
+        'exchange',
+        'forward',
+        'move',
+        'move_if_noexcept',
+        'as_const',
+        'declval',
+        'cmp_equal',
+        'cmp_not_equal',
+        'cmp_less',
+        'cmp_greater',
+        'cmp_less_equal',
+        'cmp_greater_equal',
+        'in_range',
+        'make_pair',
+        'get',
+        'pair',
+        'integer_sequence',
+        'tuple',
+        'piecewise_construct_t',
+        'piecewise_construct',
+        'in_place',
+        'in_place_type',
+        'in_place_index',
+        'in_place_t',
+        'in_place_type_t',
+        'in_place_index_t',
     ],
     'vector': [
         # incomplete
