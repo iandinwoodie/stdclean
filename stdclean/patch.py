@@ -1,14 +1,13 @@
 """Functions for patching target C++ source and header files."""
 
 import re
+import sys
 
 
 def find_std_objects(std_objects, line):
-    pattern = (
-        r'\\"|"(?:\\"|[^"])*"|((^|[^\w:])({objects})((?=<)|$|[^\w]))'.format(
-            objects='|'.join(std_objects)))
-    matches = re.findall(pattern, line)
-    return set([x[2] for x in matches if x[2] != ''])
+    delims = r'\s|\(|\)|<|>|&|\*'
+    segments = re.split(delims, line)
+    return set([x for x in segments if x in std_objects])
 
 
 def build_std_decl_lines(objects):
