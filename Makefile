@@ -1,5 +1,4 @@
-.PHONY: default
-default: tests
+.DEFAULT_GOAL := help
 
 .PHONY: test
 test: ## Perform self tests on the program this makefile builds.
