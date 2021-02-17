@@ -10,7 +10,7 @@ def find_std_objects(std_objects, line):
     return set([x for x in segments if x in std_objects])
 
 
-def build_std_decl_lines(objects):
+def get_std_decl_lines(objects):
     # TODO: account for existing decls
     std_decl = 'using std::{obj};\n'
     return [std_decl.format(obj=x) for x in objects]
@@ -46,7 +46,7 @@ def patch_with_std_decl(path, mapping):
         found_objects.update(find_std_objects(std_objects, line))
     if not found_objects:
         return
-    decl_lines = build_std_decl_lines(found_objects)
+    decl_lines = get_std_decl_lines(found_objects)
     print(decl_lines)
     for line in decl_lines:
         lines.insert(last_include_pos+1, line)
