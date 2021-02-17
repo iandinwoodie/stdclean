@@ -7,7 +7,7 @@ STD_LIB_DEFAULT_MAPPING = {
     'any': [
         'any',
         'bad_any_cast',
-        'swap',  # specialization
+        'swap',
         'make_any',
         'any_cast',
     ],
@@ -17,7 +17,7 @@ STD_LIB_DEFAULT_MAPPING = {
     ],
     'bitset': [
         'bitset',
-        'hash',  # specialization
+        'hash',
     ],
     'csetjmp': [
         'jmp_buf',
@@ -36,7 +36,7 @@ STD_LIB_DEFAULT_MAPPING = {
         'va_end',
     ],
     'cstddef': [
-        'size_t',  # duplicate? defined in 7 places in std lib
+        'size_t',
         'ptrdiff_t',
         'nullptr_t',
         'max_allign_t',
@@ -105,6 +105,11 @@ STD_LIB_DEFAULT_MAPPING = {
         'reference_wrapper',
         'hash',
     ],
+    'limits': [
+        'numeric_limits',
+        'float_round_style',
+        'float_denorm_style',
+    ],
     'list': [
         # incomplete
         'list',
@@ -112,6 +117,25 @@ STD_LIB_DEFAULT_MAPPING = {
     'map': [
         # incomplete
         'map',
+    ],
+    'new': [
+        'bad_alloc',
+        'bad_array_new_length',
+        'nothrow_t',
+        'align_val_t',
+        'destroying_delete_t',
+        'new_handler',
+        'no_throw',
+        'hardware_destructive_interference_size',
+        'hardware_constructive_interference_size',
+    ],
+    'optional': [
+        'optional',
+        'bad_optional_access',
+        'hash',
+        'nullopt',
+        'swap',
+        'make_optional',
     ],
     'set': [
         # incomplete
