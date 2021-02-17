@@ -106,6 +106,7 @@ pwsd_testdata = [  # pwsd = patch_with_std_decl
     (['/* bar */'], {'foo': ['bar']}, []),
     (['bar /* start comment ...'], {'foo': ['bar']}, []),
     (['... end comment */ bar'], {'foo': ['bar']}, []),
+    (['/* start ...', 'bar', '... end */'], {'foo': ['bar']}, []),
     # Verify that std namespace using directives are removed regardless of other
     # matching.
     (['using namespace std;'], {'foo': ['bar']}, ['']),
