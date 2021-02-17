@@ -12,7 +12,7 @@ def find_std_objects(std_objects, line):
 def get_std_decl_lines(objects):
     # TODO: account for existing decls
     std_decl = 'using std::{obj};\n'
-    return [std_decl.format(obj=x) for x in objects]
+    return set(std_decl.format(obj=x) for x in objects)
 
 
 def patch_with_std_decl(path, mapping):
@@ -22,7 +22,8 @@ def patch_with_std_decl(path, mapping):
     inside_block_comment = False
     std_objects = set().union(*mapping.values())
     found_objects = set()
-    # std_directive_removed = False
+    std_directive_removed = False
+    existing_decl_lines = set()
     for idx, line in enumerate(lines):
         # Check if a block comment is being closed.
         if '/*' in line:
@@ -43,13 +44,19 @@ def patch_with_std_decl(path, mapping):
         elif '#include ' in line:
             last_include_pos = idx
             continue
+        elif 'using namespace std;' in line:
+            std_directive_removed = True
+            lines[idx] = ''
+            continue
+        elif 'using std::' in line:
+            existing_decl_lines.add(line)
+            continue
         found_objects.update(find_std_objects(std_objects, line))
+    new_decl_lines = get_std_decl_lines(found_objects) - existing_decl_lines
     # Return early if no modifications are required.
-    if not found_objects:
+    if not (new_decl_lines or std_directive_removed):
         return False
-    decl_lines = get_std_decl_lines(found_objects)
-    for line in decl_lines:
-        lines.insert(last_include_pos+1, line)
+    [lines.insert(last_include_pos+1, x) for x in new_decl_lines]
     with open(path, 'w') as fp:
         fp.writelines(lines)
     return True
