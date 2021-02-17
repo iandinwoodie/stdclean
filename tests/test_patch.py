@@ -4,8 +4,7 @@ import pytest
 
 from stdclean import patch
 
-
-@pytest.mark.parametrize('line, std_objects, found_objects', [
+fso_testdata = [  # fso = find_std_objects
     # Verify empty function argument(s).
     ('', [], []),
     ('foo', [], []),
@@ -62,7 +61,8 @@ from stdclean import patch
     ('#include <string>', ['string'], ['string']),
     ('// string', ['string'], ['string']),
     ('/* string */', ['string'], ['string']),
-])
+]
+@pytest.mark.parametrize('line, std_objects, found_objects', fso_testdata)
 def test_find_std_objects(line, std_objects, found_objects):
     assert patch.find_std_objects(std_objects, line) == set(found_objects)
 
