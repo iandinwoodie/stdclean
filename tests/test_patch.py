@@ -116,9 +116,9 @@ pwsd_testdata = [  # pwsd = patch_with_std_decl
 
 @pytest.mark.parametrize('lines_in, mapping, lines_out', pwsd_testdata)
 def test_patch_with_std_decl(monkeypatch, lines_in, mapping, lines_out):
-    print('here')
     def mock_get_std_decl_lines(objects):
         return set(['@{}'.format(x) for x in objects])
+
     monkeypatch.setattr(patch, 'get_std_decl_lines', mock_get_std_decl_lines)
     # TODO: Remove set wrappers below. Order matters when it comes to the
     # placing of the using-declarations within the original code.
