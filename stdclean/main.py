@@ -4,8 +4,13 @@ from stdclean.find import find_cpp_file_paths
 from stdclean.patch import patch_with_std_decl
 
 STD_LIB_DEFAULT_MAPPING = {
+    'array': [
+        # incomplete
+        'array',
+    ],
     'bitset': [
         'bitset',
+        'hash',  # specialization
     ],
     'csetjmp': [
         'jmp_buf',
@@ -22,6 +27,13 @@ STD_LIB_DEFAULT_MAPPING = {
         'va_start',
         'va_copy',
         'va_end',
+    ],
+    'cstddef': [
+        'size_t',  # duplicate? defined in 7 places in std lib
+        'ptrdiff_t',
+        'nullptr_t',
+        'max_allign_t',
+        'byte'
     ],
     'cstdlib': [
         'div_t',
@@ -68,7 +80,46 @@ STD_LIB_DEFAULT_MAPPING = {
         'ldiv',
         'lldiv',
     ],
+    'deque': [
+        # incomplete
+        'deque',
+    ],
+    'forward_list': [
+        # incomplete
+        'forward_list',
+    ],
+    'functional': [
+        'placeholders',
+        'function',
+        'mem_fn',
+        'bad_function_call',
+        'is_bind_expression',
+        'is_placeholder',
+        'reference_wrapper',
+        'hash',
+    ],
+    'list': [
+        # incomplete
+        'list',
+    ],
+    'map': [
+        # incomplete
+        'map',
+    ],
+    'set': [
+        # incomplete
+        'set',
+    ],
+    'span': [
+        # incomplete
+        'span',
+    ],
+    'stack': [
+        # incomplete
+        'stack',
+    ],
     'string': [
+        # incomplete
         'basic_string',
         'string',
         'u8string',
@@ -307,7 +358,16 @@ STD_LIB_DEFAULT_MAPPING = {
         'bad_cast',
         'bad_typeid',
     ],
+    'unordered_map': [
+        # incomplete
+        'unordered_map',
+    ],
+    'unordered_set': [
+        # incomplete
+        'unordered_set',
+    ],
     'vector': [
+        # incomplete
         'vector',
     ]
 }
