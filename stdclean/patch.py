@@ -15,9 +15,7 @@ def get_std_decl_lines(objects):
     return set(std_decl.format(obj=x) for x in objects)
 
 
-def patch_with_std_decl(path, mapping):
-    with open(path, 'r') as fp:
-        lines = fp.readlines()
+def patch_with_std_decl(lines, mapping):
     last_include_pos = 0
     inside_block_comment = False
     std_objects = set().union(*mapping.values())
@@ -55,8 +53,6 @@ def patch_with_std_decl(path, mapping):
     new_decl_lines = get_std_decl_lines(found_objects) - existing_decl_lines
     # Return early if no modifications are required.
     if not (new_decl_lines or std_directive_removed):
-        return False
+        return []
     [lines.insert(last_include_pos+1, x) for x in new_decl_lines]
-    with open(path, 'w') as fp:
-        fp.writelines(lines)
-    return True
+    return lines

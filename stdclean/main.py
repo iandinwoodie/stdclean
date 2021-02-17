@@ -376,5 +376,10 @@ STD_LIB_DEFAULT_MAPPING = {
 def stdclean(target):
     path_list = find_cpp_file_paths(target)
     for path in path_list:
-        if patch_with_std_decl(path, STD_LIB_DEFAULT_MAPPING):
+        with open(path, 'r') as fp:
+            lines = fp.readlines()
+        lines = patch_with_std_decl(lines, STD_LIB_DEFAULT_MAPPING)
+        if lines:
+            with open(path, 'w') as fp:
+                fp.writelines(lines)
             print('patched: {}'.format(path))
