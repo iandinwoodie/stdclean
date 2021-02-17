@@ -158,6 +158,7 @@ STD_LIB_DEFAULT_MAPPING = {
     'map': [
         # incomplete
         'map',
+        'multimap',
     ],
     'new': [
         'bad_alloc',
@@ -178,17 +179,28 @@ STD_LIB_DEFAULT_MAPPING = {
         'swap',
         'make_optional',
     ],
+    'queue': [
+        'queue',
+        'priority_queue',
+        'uses_allocator',
+        'swap',
+    ],
     'set': [
         # incomplete
         'set',
+        'multiset',
     ],
     'span': [
         # incomplete
         'span',
+        'dynamic_extent',
+        'as_bytes',
+        'as_writable_bytes',
     ],
     'stack': [
-        # incomplete
         'stack',
+        'uses_allocator',
+        'swap',
     ],
     'stdexcept': [
         'logic_error',
@@ -469,10 +481,12 @@ STD_LIB_DEFAULT_MAPPING = {
     'unordered_map': [
         # incomplete
         'unordered_map',
+        'unordered_multimap',
     ],
     'unordered_set': [
         # incomplete
         'unordered_set',
+        'unordered_multiset',
     ],
     'utility': [
         'rel_ops',
@@ -507,6 +521,8 @@ STD_LIB_DEFAULT_MAPPING = {
     'vector': [
         # incomplete
         'vector',
+        'erase',
+        'erase_if',
     ]
 }
 
