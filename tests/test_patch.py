@@ -82,3 +82,44 @@ gsdl_testdata = [  # gsdl = get_std_decl_lines
 @pytest.mark.parametrize('objects, decl_lines', gsdl_testdata)
 def test_get_std_decl_lines(objects, decl_lines):
     assert patch.get_std_decl_lines(objects) == set(decl_lines)
+
+
+pwsd_testdata = [  # pwsd = patch_with_std_decl
+    # Verify empty function argument(s).
+    ([], {}, []),
+    (['foo'], {}, []),
+    ([], {'foo': []}, []),
+    ([], {'foo': ['bar']}, []),
+    # Verify simple match(s).
+    (['bar'], {'foo': ['bar']}, ['bar', '@bar']),
+    (['bar', 'bar'], {'foo': ['bar']}, ['bar', '@bar', 'bar']),
+    (['foo', 'bar'], {'foo': ['bar']}, ['foo', '@bar', 'bar']),
+    (['bar', 'baz'], {'foo': ['bar', 'baz']}, ['bar', '@bar', '@baz', 'baz']),
+    # Verify simple non-match(s).
+    (['foo'], {'foo': ['bar']}, []),
+    (['baz'], {'foo': ['bar']}, []),
+    (['qux'], {'foo': ['bar', 'baz']}, []),
+    # Match and non-match.
+    (['bar', 'qux'], {'foo': ['bar', 'baz']}, ['bar', '@bar', 'qux']),
+    # Verify non-match with comments.
+    (['// bar'], {'foo': ['bar']}, []),
+    (['/* bar */'], {'foo': ['bar']}, []),
+    (['bar /* start comment ...'], {'foo': ['bar']}, []),
+    (['... end comment */ bar'], {'foo': ['bar']}, []),
+    # Verify that std namespace using directives are removed regardless of other
+    # matching.
+    (['using namespace std;'], {'foo': ['bar']}, ['']),
+    (['using namespace std;', 'foo'], {'foo': ['bar']}, ['', 'foo']),
+    (['using namespace std;', 'bar'], {'foo': ['bar']}, ['', 'bar', '@bar']),
+]
+
+
+@pytest.mark.parametrize('lines_in, mapping, lines_out', pwsd_testdata)
+def test_patch_with_std_decl(monkeypatch, lines_in, mapping, lines_out):
+    print('here')
+    def mock_get_std_decl_lines(objects):
+        return set(['@{}'.format(x) for x in objects])
+    monkeypatch.setattr(patch, 'get_std_decl_lines', mock_get_std_decl_lines)
+    # TODO: Remove set wrappers below. Order matters when it comes to the
+    # placing of the using-declarations within the original code.
+    assert set(patch.patch_with_std_decl(lines_in, mapping)) == set(lines_out)
