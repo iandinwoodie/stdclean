@@ -51,5 +51,5 @@ def patch_with_std_decl(path, mapping):
     print(decl_lines)
     for line in decl_lines:
         lines.insert(last_include_pos+1, line)
-    # with open(path, 'w') as fp:
-    #    fp.writelines(lines)
+    with open(path, 'w') as fp:
+        fp.writelines(lines)
