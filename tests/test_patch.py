@@ -70,7 +70,7 @@ def test_find_std_objects(line, std_objects, found_objects):
 
 
 gsdl_testdata = [  # gsdl = get_std_decl_lines
-    # Verify empty function argument(s).
+    # Verify empty function argument.
     ([], []),
     # Verify single object.
     (['foo'], ['using std::foo;\n']),
@@ -81,4 +81,4 @@ gsdl_testdata = [  # gsdl = get_std_decl_lines
 
 @pytest.mark.parametrize('objects, decl_lines', gsdl_testdata)
 def test_get_std_decl_lines(objects, decl_lines):
-    assert patch.get_std_decl_lines(objects) == decl_lines
+    assert patch.get_std_decl_lines(objects) == set(decl_lines)
