@@ -21,34 +21,35 @@ def patch_with_std_decl(path, mapping):
         lines = fp.readlines()
     include_directive = '#include '
     last_include_pos = 0
-    line_comment_delim = '//'
-    block_comment_open_delim = '/*'
-    block_comment_close_delim = '*/'
     inside_block_comment = False
     std_objects = set().union(*mapping.values())
     found_objects = set()
     for idx, line in enumerate(lines):
-        if block_comment_close_delim in line:
+        # Check if a block comment is being closed.
+        if '/*' in line:
+            # Note: this means we don't support `string s; /* comment ...`
             inside_block_comment = False
             continue
+        # Check if the line is within an open block comment.
         elif inside_block_comment:
             continue
-        elif block_comment_open_delim in line:
+        # Perform no further checks for single line comments or empty lines.
+        elif '//' in line or line.strip() == '':
+            # Note: this means we don't support `string s; // comment`
+            continue
+        elif '*/' in line:
+            # Note: this means we don't support `... comment */ string s;`
             inside_block_comment = True
             continue
-        elif include_directive in line:
+        elif '#include ' in line:
             last_include_pos = idx
-            continue
-        elif line_comment_delim in line:
-            continue
-        elif not len(line) > 1:
             continue
         found_objects.update(find_std_objects(std_objects, line))
     if not found_objects:
-        return
+        return False
     decl_lines = get_std_decl_lines(found_objects)
-    print(decl_lines)
     for line in decl_lines:
         lines.insert(last_include_pos+1, line)
-    with open(path, 'w') as fp:
-        fp.writelines(lines)
+    #with open(path, 'w') as fp:
+    #    fp.writelines(lines)
+    return True
