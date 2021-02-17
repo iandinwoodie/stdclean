@@ -29,10 +29,10 @@ from stdclean import patch
     ('auto string = "";', ['string'], ['string']),
     # Object that partially match std types will not match.
     ('auto _string = "";', ['string'], []),
-    #('auto string_ = "";', ['string'], []), # WARNING: PROBLEMATIC
+    # ('auto string_ = "";', ['string'], []), # WARNING: PROBLEMATIC
     ('auto _string_ = "";', ['string'], []),
     ('auto qstring = "";', ['string'], []),
-    #('auto string1 = "";', ['string'], []), # WARNING: PROBLEMATIC
+    # ('auto string1 = "";', ['string'], []), # WARNING: PROBLEMATIC
     # Consider C++ modifiers (e.g., pointer).
     ('string* s;', ['string'], ['string']),
     ('string& s;', ['string'], ['string']),
@@ -43,7 +43,7 @@ from stdclean import patch
     ('list<string> v;', ['string', 'list'], ['string', 'list']),
     ('list<list<string>> v;', ['string', 'list'], ['string', 'list']),
     # Cases for C++ function return types and arguments.
-    ('string', ['string'], ['string']), # Return type on its own line.
+    ('string', ['string'], ['string']),  # Return type on its own line.
     ('string f();', ['string'], ['string']),
     ('void f(string);', ['string'], ['string']),
     ('void f( string );', ['string'], ['string']),

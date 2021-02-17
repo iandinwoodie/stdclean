@@ -22,7 +22,7 @@ STD_LIB_MAPPING = {
 
 def find_std_objects(std_objects, line):
     pattern = r'\\"|"(?:\\"|[^"])*"|((^|[\s<(])({objects})([\s>),])?)'.format(
-        objects = '|'.join(std_objects))
+        objects='|'.join(std_objects))
     matches = re.findall(pattern, line)
     return set([x[2] for x in matches if x[2] != ''])
 
