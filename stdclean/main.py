@@ -378,4 +378,3 @@ def stdclean(target):
     for path in path_list:
         if patch_with_std_decl(path, STD_LIB_DEFAULT_MAPPING):
             print('patched: {}'.format(path))
-

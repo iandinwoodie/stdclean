@@ -1,7 +1,6 @@
 """Functions for patching target C++ source and header files."""
 
 import re
-import sys
 
 
 def find_std_objects(std_objects, line):
@@ -19,11 +18,11 @@ def get_std_decl_lines(objects):
 def patch_with_std_decl(path, mapping):
     with open(path, 'r') as fp:
         lines = fp.readlines()
-    include_directive = '#include '
     last_include_pos = 0
     inside_block_comment = False
     std_objects = set().union(*mapping.values())
     found_objects = set()
+    # std_directive_removed = False
     for idx, line in enumerate(lines):
         # Check if a block comment is being closed.
         if '/*' in line:
@@ -45,11 +44,12 @@ def patch_with_std_decl(path, mapping):
             last_include_pos = idx
             continue
         found_objects.update(find_std_objects(std_objects, line))
+    # Return early if no modifications are required.
     if not found_objects:
         return False
     decl_lines = get_std_decl_lines(found_objects)
     for line in decl_lines:
         lines.insert(last_include_pos+1, line)
-    #with open(path, 'w') as fp:
-    #    fp.writelines(lines)
+    with open(path, 'w') as fp:
+        fp.writelines(lines)
     return True
