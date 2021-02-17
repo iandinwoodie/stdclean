@@ -24,7 +24,7 @@ def patch_with_std_decl(lines, mapping):
     existing_decl_lines = set()
     for idx, line in enumerate(lines):
         # Check if a block comment is being closed.
-        if '/*' in line:
+        if '*/' in line:
             # Note: this means we don't support `string s; /* comment ...`
             inside_block_comment = False
             continue
@@ -35,7 +35,7 @@ def patch_with_std_decl(lines, mapping):
         elif '//' in line or line.strip() == '':
             # Note: this means we don't support `string s; // comment`
             continue
-        elif '*/' in line:
+        elif '/*' in line:
             # Note: this means we don't support `... comment */ string s;`
             inside_block_comment = True
             continue
