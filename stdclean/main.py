@@ -91,6 +91,22 @@ STD_LIB_DEFAULT_MAPPING = {
         # incomplete
         'deque',
     ],
+    'exception': [
+        'exception',
+        'nested_exception',
+        'bad_exception',
+        'terminate_handler',
+        'exception_ptr',
+        'uncaught_exceptions',
+        'make_exception_ptr',
+        'current_exception',
+        'rethrow_exception',
+        'throw_with_nested',
+        'rethrow_if_nested',
+        'get_terminate',
+        'set_terminate',
+        'terminate',
+    ],
     'forward_list': [
         # incomplete
         'forward_list',
@@ -148,6 +164,17 @@ STD_LIB_DEFAULT_MAPPING = {
     'stack': [
         # incomplete
         'stack',
+    ],
+    'stdexcept': [
+        'logic_error',
+        'invalid_argument',
+        'domain_error',
+        'length_error',
+        'out_of_range',
+        'runtime_error',
+        'range_error',
+        'overflow_error',
+        'underflow_error',
     ],
     'string': [
         # incomplete
