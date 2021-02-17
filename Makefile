@@ -1,9 +1,12 @@
 .DEFAULT_GOAL := help
 
-.PHONY: test
-test: ## Perform self tests on the program this makefile builds.
+.PHONY: lint
+lint: ## Perform linting checks on the source files for this project.
 	flake8 stdclean tests --count --select=E9,F63,F7,F82 --show-source --statistics
 	flake8 stdclean tests --count --max-complexity=10 --max-line-length=80 --statistics
+
+.PHONY: test
+test: ## Perform self tests on the program this makefile builds.
 	pytest
 
 .PHONY: clean
