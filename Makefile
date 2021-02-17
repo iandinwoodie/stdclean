@@ -3,8 +3,9 @@ default: tests
 
 .PHONY: tests
 tests:
-	python -m pytest
-
+	flake8 stdclean tests --count --select=E9,F63,F7,F82 --show-source --statistics
+	flake8 stdclean tests --count --max-complexity=10 --max-line-length=80 --statistics
+	pytest
 
 .PHONY: clean
 clean:
