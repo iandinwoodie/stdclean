@@ -2,23 +2,6 @@
 
 import re
 
-STD_LIB_MAPPING = {
-    'bitset': [
-        'bitset',
-    ],
-    'string': [
-        'basic_string',
-        'string',
-        'u8string',
-        'u16string',
-        'u32string',
-        'wstring',
-    ],
-    'vector': [
-        'vector',
-    ]
-}
-
 
 def find_std_objects(std_objects, line):
     pattern = (
@@ -34,7 +17,7 @@ def build_std_decl_lines(objects):
     return [std_decl.format(obj=x) for x in objects]
 
 
-def patch_with_std_decl(path, mapping=STD_LIB_MAPPING):
+def patch_with_std_decl(path, mapping):
     with open(path, 'r') as fp:
         lines = fp.readlines()
     include_directive = '#include '
@@ -43,7 +26,7 @@ def patch_with_std_decl(path, mapping=STD_LIB_MAPPING):
     block_comment_open_delim = '/*'
     block_comment_close_delim = '*/'
     inside_block_comment = False
-    std_objects = set().union(*STD_LIB_MAPPING.values())
+    std_objects = set().union(*mapping.values())
     found_objects = set()
     for idx, line in enumerate(lines):
         if block_comment_close_delim in line:
