@@ -42,7 +42,7 @@ from stdclean import patch
     ('list<std::string> v;', ['string', 'list'], ['list']),
     ('list<string> v;', ['string', 'list'], ['string', 'list']),
     ('list<list<string>> v;', ['string', 'list'], ['string', 'list']),
-    # Cases for C++ function return types, arguments, and parameters.
+    # Cases for C++ function return types, args, params, and invocation.
     ('string', ['string'], ['string']),  # Return type on its own line.
     ('string f();', ['string'], ['string']),
     ('void f(string);', ['string'], ['string']),
@@ -54,9 +54,10 @@ from stdclean import patch
     ('void f(int a, string b);', ['string'], ['string']),
     ('void f( int a, string b );', ['string'], ['string']),
     ('f(string());', ['string'], ['string']),
-    # Cases for C++ derived classes/structs.
+    # Cases for C++ classes/structs.
     ('struct qstring : string {};', ['string'], ['string']),
     ('class qstring : public string {};', ['string'], ['string']),
+    ('auto s = foo.string();', ['string'], []),
     # This function will return matches for include directives and comments.
     ('#include <string>', ['string'], ['string']),
     ('// string', ['string'], ['string']),
