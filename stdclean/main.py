@@ -627,7 +627,9 @@ def stdclean(target):
         with open(path, 'r') as fp:
             lines = fp.readlines()
         lines = patch_with_std_decl(lines, STD_LIB_DEFAULT_MAPPING)
+        msg = 'Skipping: {}'
         if lines:
-            with open(path, 'w') as fp:
+            with open(path.with_suffix('.out.cpp'), 'w') as fp:
                 fp.writelines(lines)
-            print('patched: {}'.format(path))
+            msg = 'Patched: {}'
+        print(msg.format(path))

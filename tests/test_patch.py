@@ -1,8 +1,11 @@
 """Tests for stdclean.patch module."""
 
+import os
+
 import pytest
 
 from stdclean import patch
+from stdclean import main
 
 fso_testdata = [  # fso = find_std_objects
     # Verify empty function argument(s).
@@ -124,3 +127,26 @@ def test_patch_with_std_decl(monkeypatch, lines_in, mapping, lines_out):
     # TODO: Remove set wrappers below. Order matters when it comes to the
     # placing of the using-declarations within the original code.
     assert set(patch.patch_with_std_decl(lines_in, mapping)) == set(lines_out)
+
+
+pwsd_file_testdata = [
+    ('comments'),
+    ('functions'),
+    ('includes'),
+    ('macros'),
+    ('streams'),
+]
+
+
+@pytest.mark.parametrize('basename', pwsd_file_testdata)
+def test_patch_with_std_decl_file(basename):
+    test_dir = os.path.join('tests', 'test-patch')
+    input_file = os.path.join(
+        test_dir, '{basename}_input.cpp'.format(basename=basename))
+    lines_in = open(input_file, 'r').readlines()
+    result = patch.patch_with_std_decl(lines_in, main.STD_LIB_DEFAULT_MAPPING)
+    output_file = os.path.join(
+        test_dir, '{basename}_output.cpp'.format(basename=basename))
+    expected = open(output_file, 'r').readlines()
+    assert result == expected
+

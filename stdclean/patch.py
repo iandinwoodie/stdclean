@@ -15,6 +15,13 @@ def get_std_decl_lines(objects):
     return set(std_decl.format(obj=x) for x in objects)
 
 
+def has_nonquoted_instance(line, obj):
+    regex = re.compile(
+        r'{obj}(?=([^"\\]*(\\.|"([^"\\]*\\.)*[^"\\]*"))*[^"]*$)'.format(
+            obj=obj))
+    return True if regex.search(line) else False
+
+
 def patch_with_std_decl(lines, mapping):
     last_include_pos = 0
     inside_block_comment = False
@@ -39,7 +46,8 @@ def patch_with_std_decl(lines, mapping):
             # Note: this means we don't support `... comment */ string s;`
             inside_block_comment = True
             continue
-        elif '#include ' in line:
+        elif '#include' in line:
+        #elif has_nonquoted_instance(line, '#include'):
             last_include_pos = idx
             continue
         elif 'using namespace std;' in line:
@@ -51,6 +59,8 @@ def patch_with_std_decl(lines, mapping):
             continue
         found_objects.update(find_std_objects(std_objects, line))
     new_decl_lines = get_std_decl_lines(found_objects) - existing_decl_lines
+    new_decl_lines = list(new_decl_lines).sort()
+    print(new_decl_lines)
     # Return early if no modifications are required.
     if not (new_decl_lines or std_directive_removed):
         return []
